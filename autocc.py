@@ -429,7 +429,18 @@ def create_wrapper(rtl, wrap):
                         wrap.write("// Instance Modules\n")
                         wrap.write("//==============================================================================\n\n")
                         #iterate over all the signals and create the instance
-                        wrap.write("\t" + module_name + " u_" + module_name + " (\n")
+                        wrap.write("\t" + module_name)
+                        if params:
+                            wrap.write(" #(\n")
+                            first_param = True
+                            for param in params:
+                                if not first_param:
+                                    wrap.write(",\n")
+                                wrap.write("\t." + param + "(" + param + ")")
+                                first_param = False
+                            wrap.write("\n\t)")
+
+                        wrap.write(" u_" + module_name + " (\n")
                         first_param = True
                         for signal in signals:
                             if not first_param:
@@ -437,7 +448,18 @@ def create_wrapper(rtl, wrap):
                             wrap.write("\t." + signal + "(" + signal + ")")
                             first_param = False
                         wrap.write("\n);\n\n")
-                        wrap.write("\t" + module_name + " u_" + module_name + "2 (\n")
+                        wrap.write("\t" + module_name)
+                        if params:
+                            wrap.write(" #(\n")
+                            first_param = True
+                            for param in params:
+                                if not first_param:
+                                    wrap.write(",\n")
+                                wrap.write("\t." + param + "(" + param + ")")
+                                first_param = False
+                            wrap.write("\n\t)")
+
+                        wrap.write(" u_" + module_name + "2 (\n")
                         first_param = True
                         for signal in signals:
                             if not first_param:
@@ -537,7 +559,7 @@ def parse_global(rtl, prop, bind):
                 prop.write("#(\n\t\tparameter ASSERT_INPUTS = 0,\n")
             if "parameter" in line:
                 prop.write("\t\t" + line)
-                matches = re.findall("\s*\t*parameter\s+(\w+)\s+=\s*\d+(?:,)?", line)
+                matches = re.findall("\s*\t*parameter(?:\s+[\w:]+)?(?:\s*\[[^\]]+\])*\s+(\w+)\s*=\s*['\w:]+(?:,?)\s*", line)
                 for param in matches:
                     bind.write("\t\t." + param + " (" + param + "),\n")
                     params.append(param)
