@@ -5,7 +5,7 @@ import sys
 from shutil import copyfile
 from datetime import date
 
-keywords = ["config", "clk", "rst", "htif", "boot","hart","irq","ipi","time","debug",]
+keywords = ["config", "clk", "rst", "htif", "boot","hart","irq","ipi","time","debug","test","addr_map","default",]
 
 override_tool_script = 1
 recursive = 0

@@ -1,0 +1,15 @@
++libext+.v
++libext+.h
++libext+.sv
++libext+.tmp.v
++librescan
++incdir+${DUT_PATH}
+-y ${DUT_PATH}
++incdir+${INC_PATH}
+-y ${INC_PATH}
+${INC_PATH}
+-f ${PROP_PATH}/../manual_sub.vc
+${PROP_PATH}/axi_xbar_prop.sv
+${PROP_PATH}/axi_xbar_bind.svh
+${DUT_ROOT}/axi_xbar.sv
+${DUT_ROOT}/axi_xbar_wrap.sv
