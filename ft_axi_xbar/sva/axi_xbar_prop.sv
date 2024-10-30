@@ -92,6 +92,8 @@ always_ff @(posedge clk_i) begin
 end
 
 // There is an assertion per output signal from the DUT
+as__slv_ports_resp_o: assert property (spy_mode |-> (slv_ports_resp_o == slv_ports_resp_o_2));
+as__mst_ports_req_o: assert property (spy_mode |-> (mst_ports_req_o == mst_ports_req_o_2));
 
 // There is an assumption per input signal to the DUT
 am__slv_ports_req_i: assume property (spy_mode |-> (slv_ports_req_i == slv_ports_req_i_2));
@@ -126,6 +128,43 @@ assign transfer_cond = architectural_state_eq && io_equal;
         am_no_overlap: assume property (addr_map_i[i].end_addr < addr_map_i[j].start_addr ||
                                         addr_map_i[i].start_addr > addr_map_i[j].end_addr);
       end
+    end
+  end
+
+  // Count outstanding transactions
+  reg [1:0][Cfg.NoSlvPorts-1:0][$clog2(Cfg.MaxMstTrans)-1:0] r_cnt_d, r_cnt_q, w_cnt_d, w_cnt_q;
+
+  for (genvar i = 0; i < Cfg.NoSlvPorts; i++) begin : count_outstanding
+    assign r_cnt_d[0][i] = r_cnt_q[0][i] + (slv_ports_req_i[i].ar_valid && slv_ports_resp_o[i].ar_ready) -
+                           (slv_ports_resp_o[i].r_valid && slv_ports_req_i[i].r_ready && slv_ports_resp_o[i].r.last);
+    assign r_cnt_d[1][i] = r_cnt_q[1][i] + (slv_ports_req_i_2[i].ar_valid && slv_ports_resp_o_2[i].ar_ready) -
+                           (slv_ports_resp_o_2[i].r_valid && slv_ports_req_i_2[i].r_ready && slv_ports_resp_o_2[i].r.last);
+    assign w_cnt_d[0][i] = w_cnt_q[0][i] + (slv_ports_req_i[i].aw_valid && slv_ports_resp_o[i].aw_ready) -
+                           (slv_ports_resp_o[i].b_valid && slv_ports_req_i[i].b_ready);
+    assign w_cnt_d[1][i] = r_cnt_q[1][i] + (slv_ports_req_i_2[i].aw_valid && slv_ports_resp_o_2[i].aw_ready) -
+                           (slv_ports_resp_o_2[i].b_valid && slv_ports_req_i_2[i].b_ready);
+  end
+
+  logic any_valid;
+  always_comb begin : no_valid
+    any_valid = 1'b0;
+    for (int i = 0; i < Cfg.NoSlvPorts; i++) begin
+      if (slv_ports_req_i[i].ar_valid || slv_ports_req_i[i].aw_valid || slv_ports_req_i[i].w_valid || slv_ports_resp_o[i].r_valid || slv_ports_resp_o[i].b_valid ||
+          slv_ports_req_i_2[i].ar_valid || slv_ports_req_i_2[i].aw_valid || slv_ports_req_i_2[i].w_valid || slv_ports_resp_o_2[i].r_valid || slv_ports_resp_o_2[i].b_valid)
+        any_valid = 1'b1;
+    end
+  end
+
+
+  assign architectural_state_eq = !|r_cnt_q && !|w_cnt_q && !any_valid;
+
+  always_ff @(posedge clk_i) begin
+    if (!rst_ni) begin
+      r_cnt_q <= 0;
+      w_cnt_q <= 0;
+    end else begin
+      r_cnt_q <= r_cnt_d;
+      w_cnt_q <= w_cnt_d;
     end
   end
 
