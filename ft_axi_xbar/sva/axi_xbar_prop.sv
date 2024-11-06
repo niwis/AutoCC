@@ -115,10 +115,10 @@ assign transfer_cond = architectural_state_eq && io_equal;
 
 //====DESIGNER-ADDED-SVA====//
 
-  // We are never in testmode
+  // ASSUME 1: We are never in testmode
   no_testmode: assume property (test_i == 1'b0);
 
-  // Assume we have a legal address map
+  // ASSUME 2: We have a legal address map
   for (genvar i = 0; i < Cfg.NoAddrRules; i++) begin : legal_address_map
     // Each address rule needs to be increasing (end address higher than start address)
     am_pos_range: assume property (addr_map_i[i].end_addr > addr_map_i[i].start_addr);
@@ -131,6 +131,18 @@ assign transfer_cond = architectural_state_eq && io_equal;
     end
   end
 
+  // ASSUME 3: There is no valid request during context switch
+  logic any_valid;
+  always_comb begin : no_valid
+    any_valid = 1'b0;
+    for (int i = 0; i < Cfg.NoSlvPorts; i++) begin
+      if (slv_ports_req_i[i].ar_valid || slv_ports_req_i[i].aw_valid || slv_ports_req_i[i].w_valid || slv_ports_resp_o[i].r_valid || slv_ports_resp_o[i].b_valid ||
+          slv_ports_req_i_2[i].ar_valid || slv_ports_req_i_2[i].aw_valid || slv_ports_req_i_2[i].w_valid || slv_ports_resp_o_2[i].r_valid || slv_ports_resp_o_2[i].b_valid)
+        any_valid = 1'b1;
+    end
+  end
+
+  // ASSUME 4: There are no outstanding transactions during context switch (transaction-level)
   // Count outstanding transactions
   reg [1:0][Cfg.NoSlvPorts-1:0][$clog2(Cfg.MaxMstTrans)-1:0] r_cnt_d, r_cnt_q, w_cnt_d, w_cnt_q;
 
@@ -145,19 +157,6 @@ assign transfer_cond = architectural_state_eq && io_equal;
                            (slv_ports_resp_o_2[i].b_valid && slv_ports_req_i_2[i].b_ready);
   end
 
-  logic any_valid;
-  always_comb begin : no_valid
-    any_valid = 1'b0;
-    for (int i = 0; i < Cfg.NoSlvPorts; i++) begin
-      if (slv_ports_req_i[i].ar_valid || slv_ports_req_i[i].aw_valid || slv_ports_req_i[i].w_valid || slv_ports_resp_o[i].r_valid || slv_ports_resp_o[i].b_valid ||
-          slv_ports_req_i_2[i].ar_valid || slv_ports_req_i_2[i].aw_valid || slv_ports_req_i_2[i].w_valid || slv_ports_resp_o_2[i].r_valid || slv_ports_resp_o_2[i].b_valid)
-        any_valid = 1'b1;
-    end
-  end
-
-
-  assign architectural_state_eq = !|r_cnt_q && !|w_cnt_q && !any_valid;
-
   always_ff @(posedge clk_i) begin
     if (!rst_ni) begin
       r_cnt_q <= 0;
@@ -167,5 +166,47 @@ assign transfer_cond = architectural_state_eq && io_equal;
       w_cnt_q <= w_cnt_d;
     end
   end
+
+  // ASSUME 5: There are no inflight beats during context switch (channel-level)
+  // Count inflight transactions
+  reg [1:0][$clog2(5*Cfg.MaxMstTrans*Cfg.NoSlvPorts+Cfg.MaxSlvTrans*Cfg.NoMstPorts)-1:0] inf_d, inf_q;
+
+  always_comb begin : cnt_inf
+    inf_d = inf_q;
+    for (int i = 0; i < Cfg.NoSlvPorts; i++) begin
+      inf_d[0] += slv_ports_req_i[i].ar_valid && slv_ports_resp_o[i].ar_ready;
+      inf_d[1] += slv_ports_req_i_2[i].ar_valid && slv_ports_resp_o_2[i].ar_ready;
+      inf_d[0] += slv_ports_req_i[i].aw_valid && slv_ports_resp_o[i].aw_ready;
+      inf_d[1] += slv_ports_req_i_2[i].aw_valid && slv_ports_resp_o_2[i].aw_ready;
+      inf_d[0] += slv_ports_req_i[i].w_valid && slv_ports_resp_o[i].w_ready;
+      inf_d[1] += slv_ports_req_i_2[i].w_valid && slv_ports_resp_o_2[i].w_ready;
+      inf_d[0] -= slv_ports_resp_o[i].r_valid && slv_ports_req_i[i].r_ready;
+      inf_d[1] -= slv_ports_resp_o_2[i].r_valid && slv_ports_req_i_2[i].r_ready;
+      inf_d[0] -= slv_ports_resp_o[i].b_valid && slv_ports_req_i[i].b_ready;
+      inf_d[1] -= slv_ports_resp_o_2[i].b_valid && slv_ports_req_i_2[i].b_ready;
+    end
+    for (int i = 0; i < Cfg.NoMstPorts; i++) begin
+      inf_d[0] -= mst_ports_req_o[i].ar_valid && mst_ports_resp_i[i].ar_ready;
+      inf_d[1] -= mst_ports_req_o_2[i].ar_valid && mst_ports_resp_i_2[i].ar_ready;
+      inf_d[0] -= mst_ports_req_o[i].aw_valid && mst_ports_resp_i[i].aw_ready;
+      inf_d[1] -= mst_ports_req_o_2[i].aw_valid && mst_ports_resp_i_2[i].aw_ready;
+      inf_d[0] -= mst_ports_req_o[i].w_valid && mst_ports_resp_i[i].w_ready;
+      inf_d[1] -= mst_ports_req_o_2[i].w_valid && mst_ports_resp_i_2[i].w_ready;
+      inf_d[0] += mst_ports_resp_i[i].r_valid && mst_ports_req_o[i].r_ready;
+      inf_d[1] += mst_ports_resp_i_2[i].r_valid && mst_ports_req_o_2[i].r_ready;
+      inf_d[0] += mst_ports_resp_i[i].b_valid && mst_ports_req_o[i].b_ready;
+      inf_d[1] += mst_ports_resp_i_2[i].b_valid && mst_ports_req_o_2[i].b_ready;
+    end
+  end
+
+  always_ff @(posedge clk_i) begin
+    if (!rst_ni) begin
+      inf_q <= 0;
+    end else begin
+      inf_q <= inf_d;
+    end
+  end
+
+  assign architectural_state_eq = !|r_cnt_q && !|w_cnt_q && !|inf_q && !any_valid;
 
 endmodule
