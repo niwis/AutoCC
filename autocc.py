@@ -691,8 +691,8 @@ def gen_models(prop):
         prop.write("// There is an assertion per output signal from the DUT\n")
         for signal in signals:
             if signals[signal]["type"] == 0 and not any(x in signal for x in keywords):
-                if signal.endswith("val") or signal.endswith("write") or signal.endswith("trans"):
-                    prop.write("as__" + signal + ": assert property (spy_mode |-> (" + signal + " == " + signal + "_2));\n")
+                #if signal.endswith("val") or signal.endswith("write") or signal.endswith("trans"):
+                prop.write("as__" + signal + ": assert property (spy_mode |-> (" + signal + " == " + signal + "_2));\n")
         prop.write("\n")
 
         prop.write("// There is an assumption per input signal to the DUT\n")
