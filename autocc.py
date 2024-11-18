@@ -459,10 +459,11 @@ def create_wrapper(rtl, wrap):
                         wrap.write(" u_" + module_name + " (\n")
                         first_param = True
                         for signal in signals:
-                            if not first_param:
-                                wrap.write(",\n")
-                            wrap.write("\t." + signal + "(" + signal + ")")
-                            first_param = False
+                            if signals[signal]["is_virtual"] == 0:
+                                if not first_param:
+                                    wrap.write(",\n")
+                                wrap.write("\t." + signal + "(" + signal + ")")
+                                first_param = False
                         wrap.write("\n);\n\n")
                         wrap.write("\t" + module_name)
                         if params:
@@ -478,13 +479,14 @@ def create_wrapper(rtl, wrap):
                         wrap.write(" u_" + module_name + "2 (\n")
                         first_param = True
                         for signal in signals:
-                            if not first_param:
-                                wrap.write(",\n")
-                            if not any(x in signal for x in keywords):
-                                wrap.write("\t." + signal + "(" + signal + "_2)")
-                            else:
-                                wrap.write("\t." + signal + "(" + signal + ")")
-                            first_param = False
+                            if signals[signal]["is_virtual"] == 0:
+                                if not first_param:
+                                    wrap.write(",\n")
+                                if not any(x in signal for x in keywords):
+                                    wrap.write("\t." + signal + "(" + signal + "_2)")
+                                else:
+                                    wrap.write("\t." + signal + "(" + signal + ")")
+                                first_param = False
                         wrap.write("\n);\n\n")
                         wrap.write("endmodule\n")
                         break
