@@ -137,58 +137,10 @@ as__mst_ports_req_o: assert property (spy_mode |-> (mst_ports_req_o == mst_ports
 
 // There is an assumption per input signal to the DUT
 am__slv_ports_req_i: assume property (spy_mode |-> (slv_ports_req_i == slv_ports_req_i_2));
-am__mst_port_r_req_0_val: assume property (spy_mode |-> (mst_port_r_req_0_val == mst_port_r_req_0_val_2));
-am__mst_port_r_req_0__2_val: assume property (spy_mode |-> (mst_port_r_req_0__2_val == mst_port_r_req_0__2_val_2));
-am__mst_port_r_req_0_rdy: assume property (spy_mode |-> (mst_port_r_req_0_rdy == mst_port_r_req_0_rdy_2));
-am__mst_port_r_req_0__2_rdy: assume property (spy_mode |-> (mst_port_r_req_0__2_rdy == mst_port_r_req_0__2_rdy_2));
-am__mst_port_r_req_0_transid: assume property (spy_mode |-> (mst_port_r_req_0_transid == mst_port_r_req_0_transid_2));
-am__mst_port_r_req_0__2_transid: assume property (spy_mode |-> (mst_port_r_req_0__2_transid == mst_port_r_req_0__2_transid_2));
-am__mst_port_r_resp_0_val: assume property (spy_mode |-> (mst_port_r_resp_0_val == mst_port_r_resp_0_val_2));
-am__mst_port_r_resp_0__2_val: assume property (spy_mode |-> (mst_port_r_resp_0__2_val == mst_port_r_resp_0__2_val_2));
-am__mst_port_r_resp_0_rdy: assume property (spy_mode |-> (mst_port_r_resp_0_rdy == mst_port_r_resp_0_rdy_2));
-am__mst_port_r_resp_0__2_rdy: assume property (spy_mode |-> (mst_port_r_resp_0__2_rdy == mst_port_r_resp_0__2_rdy_2));
-am__mst_port_r_resp_0_transid: assume property (spy_mode |-> (mst_port_r_resp_0_transid == mst_port_r_resp_0_transid_2));
-am__mst_port_r_resp_0__2_transid: assume property (spy_mode |-> (mst_port_r_resp_0__2_transid == mst_port_r_resp_0__2_transid_2));
-am__mst_port_r_req_1_val: assume property (spy_mode |-> (mst_port_r_req_1_val == mst_port_r_req_1_val_2));
-am__mst_port_r_req_1__2_val: assume property (spy_mode |-> (mst_port_r_req_1__2_val == mst_port_r_req_1__2_val_2));
-am__mst_port_r_req_1_rdy: assume property (spy_mode |-> (mst_port_r_req_1_rdy == mst_port_r_req_1_rdy_2));
-am__mst_port_r_req_1__2_rdy: assume property (spy_mode |-> (mst_port_r_req_1__2_rdy == mst_port_r_req_1__2_rdy_2));
-am__mst_port_r_req_1_transid: assume property (spy_mode |-> (mst_port_r_req_1_transid == mst_port_r_req_1_transid_2));
-am__mst_port_r_req_1__2_transid: assume property (spy_mode |-> (mst_port_r_req_1__2_transid == mst_port_r_req_1__2_transid_2));
-am__mst_port_r_resp_1_val: assume property (spy_mode |-> (mst_port_r_resp_1_val == mst_port_r_resp_1_val_2));
-am__mst_port_r_resp_1__2_val: assume property (spy_mode |-> (mst_port_r_resp_1__2_val == mst_port_r_resp_1__2_val_2));
-am__mst_port_r_resp_1_rdy: assume property (spy_mode |-> (mst_port_r_resp_1_rdy == mst_port_r_resp_1_rdy_2));
-am__mst_port_r_resp_1__2_rdy: assume property (spy_mode |-> (mst_port_r_resp_1__2_rdy == mst_port_r_resp_1__2_rdy_2));
-am__mst_port_r_resp_1_transid: assume property (spy_mode |-> (mst_port_r_resp_1_transid == mst_port_r_resp_1_transid_2));
-am__mst_port_r_resp_1__2_transid: assume property (spy_mode |-> (mst_port_r_resp_1__2_transid == mst_port_r_resp_1__2_transid_2));
 am__mst_ports_resp_i: assume property (spy_mode |-> (mst_ports_resp_i == mst_ports_resp_i_2));
 
 assign io_equal = slv_ports_req_i == slv_ports_req_i_2 &&
  slv_ports_resp_o == slv_ports_resp_o_2 &&
- mst_port_r_req_0_val == mst_port_r_req_0_val_2 &&
- mst_port_r_req_0__2_val == mst_port_r_req_0__2_val_2 &&
- mst_port_r_req_0_rdy == mst_port_r_req_0_rdy_2 &&
- mst_port_r_req_0__2_rdy == mst_port_r_req_0__2_rdy_2 &&
- mst_port_r_req_0_transid == mst_port_r_req_0_transid_2 &&
- mst_port_r_req_0__2_transid == mst_port_r_req_0__2_transid_2 &&
- mst_port_r_resp_0_val == mst_port_r_resp_0_val_2 &&
- mst_port_r_resp_0__2_val == mst_port_r_resp_0__2_val_2 &&
- mst_port_r_resp_0_rdy == mst_port_r_resp_0_rdy_2 &&
- mst_port_r_resp_0__2_rdy == mst_port_r_resp_0__2_rdy_2 &&
- mst_port_r_resp_0_transid == mst_port_r_resp_0_transid_2 &&
- mst_port_r_resp_0__2_transid == mst_port_r_resp_0__2_transid_2 &&
- mst_port_r_req_1_val == mst_port_r_req_1_val_2 &&
- mst_port_r_req_1__2_val == mst_port_r_req_1__2_val_2 &&
- mst_port_r_req_1_rdy == mst_port_r_req_1_rdy_2 &&
- mst_port_r_req_1__2_rdy == mst_port_r_req_1__2_rdy_2 &&
- mst_port_r_req_1_transid == mst_port_r_req_1_transid_2 &&
- mst_port_r_req_1__2_transid == mst_port_r_req_1__2_transid_2 &&
- mst_port_r_resp_1_val == mst_port_r_resp_1_val_2 &&
- mst_port_r_resp_1__2_val == mst_port_r_resp_1__2_val_2 &&
- mst_port_r_resp_1_rdy == mst_port_r_resp_1_rdy_2 &&
- mst_port_r_resp_1__2_rdy == mst_port_r_resp_1__2_rdy_2 &&
- mst_port_r_resp_1_transid == mst_port_r_resp_1_transid_2 &&
- mst_port_r_resp_1__2_transid == mst_port_r_resp_1__2_transid_2 &&
  mst_ports_req_o == mst_ports_req_o_2 &&
  mst_ports_resp_i == mst_ports_resp_i_2 &&
 1'b1;

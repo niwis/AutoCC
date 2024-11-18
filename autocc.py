@@ -181,8 +181,8 @@ def parse_annotation(line):
         assign_wires[name]=assign
         assign_wires[name2]=assign2
         if (verbose):  print("Matched wire:" + wire +", assign: "+assign)
-        parse_signal(1,wire+"\n",None)
-        parse_signal(1,wire2+"\n",None)
+        parse_signal(1,wire+"\n",None,1)
+        parse_signal(1,wire2+"\n",None,1)
 
 
     #add implications
@@ -197,7 +197,7 @@ def parse_annotation(line):
         implications[name2] = annotation2
     return None
 
-def parse_signal(is_input, line, annotation):
+def parse_signal(is_input, line, annotation, is_virtual):
     global interfaces, handshakes, signals, verbose, rst_sig, clk_sig
     name = None
     entry = None
@@ -259,7 +259,7 @@ def parse_signal(is_input, line, annotation):
             fields[name] = annotation
             if (verbose):  print("Annotated as: " + annotation)
 
-        entry = {"size": size, "comment": comment, "type": is_input}
+        entry = {"size": size, "comment": comment, "type": is_input, "is_virtual": is_virtual}
         signals[name] = entry
 
 def parse_fields(prop):
@@ -616,13 +616,13 @@ def parse_global(rtl, prop, bind):
                     line = line.replace("output", "input ").split("\n")[0]
                     line += " //output\n"
                     write_line(prop,line)
-                    parse_signal(0,line[5:], annotation)
+                    parse_signal(0,line[5:], annotation, 0)
                 elif line.startswith("input"):
                     write_line(prop,line)
-                    parse_signal(1,line[5:], annotation)
+                    parse_signal(1,line[5:], annotation, 0)
                 elif line.startswith("wire"):
                     prop.write("\t\tinput  " + line)
-                    parse_signal(1,line, annotation)
+                    parse_signal(1,line, annotation, 0)
                 else:
                     prop.write("\t\t" + line)
                 annotation = None
@@ -706,7 +706,7 @@ def gen_models(prop):
 
         prop.write("// There is an assertion per output signal from the DUT\n")
         for signal in signals:
-            if signals[signal]["type"] == 0 and not any(x in signal for x in keywords):
+            if signals[signal]["type"] == 0 and not any(x in signal for x in keywords) and signals[signal]["is_virtual"] == 0:
                 #if signal.endswith("val") or signal.endswith("write") or signal.endswith("trans"):
                 prop.write("as__" + signal + ": assert property (spy_mode |-> (" + signal + " == " + signal + "_2));\n")
         prop.write("\n")
@@ -714,12 +714,12 @@ def gen_models(prop):
         prop.write("// There is an assumption per input signal to the DUT\n")
         for signal in signals:
             #assume inputs (type 1)
-            if signals[signal]["type"] == 1 and not any(x in signal for x in keywords):
+            if signals[signal]["type"] == 1 and not any(x in signal for x in keywords) and signals[signal]["is_virtual"] == 0:
                 prop.write("am__" + signal + ": assume property (spy_mode |-> (" + signal + " == " + signal + "_2));\n")
         prop.write("\nassign io_equal =")
 
         for signal in signals:
-            if not any(x in signal for x in keywords):
+            if not any(x in signal for x in keywords) and signals[signal]["is_virtual"] == 0:
                 prop.write(" " + signal + " == " + signal + "_2 &&\n")
         prop.write("1'b1;\n")
 
