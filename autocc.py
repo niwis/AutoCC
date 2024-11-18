@@ -159,19 +159,30 @@ def parse_annotation(line):
     elif match_wire:
         size = match_wire.group(1)
         name = match_wire.group(2)
+        #insert '__2' key before suffix
+        name_sfx_idx = name.rfind("_")
+        name2 = name[:name_sfx_idx] + "__2" + name[name_sfx_idx:]
         assign = match_wire.group(3)
 
         if not assign.endswith(";"):
             assign += ";"
+        #append before first '[' or '.' or at the end
+        index = min(i for i in (assign.find("["), assign.find("."), assign.index(";")) if i != -1)
+        assign2 = assign[:index] + "_2" + assign[index:]
         if size:
             wire = "wire "+size+name+";"
+            wire2 = "wire "+size+name2+";"
         else:
             wire = "wire "+name+";"
+            wire2 = "wire "+name2+";"
 
         def_wires.append(wire)
+        def_wires.append(wire2)
         assign_wires[name]=assign
+        assign_wires[name2]=assign2
         if (verbose):  print("Matched wire:" + wire +", assign: "+assign)
         parse_signal(1,wire+"\n",None)
+        parse_signal(1,wire2+"\n",None)
 
 
     #add implications
@@ -179,6 +190,11 @@ def parse_annotation(line):
         annotation = {"p": p, "q": q, "symbol": symbol, "size": "", "p_unique": None, "q_unique": None}
         implications[name] = annotation
         if (verbose):  print("Matched iface:" + p +", and: "+q)
+        name2 = name + "__2"
+        p2 = p + "__2"
+        q2 = q + "__2"
+        annotation2 = {"p": p2, "q": q2, "symbol": symbol, "size": "", "p_unique": None, "q_unique": None}
+        implications[name2] = annotation2
     return None
 
 def parse_signal(is_input, line, annotation):
