@@ -72,6 +72,54 @@ endclocking
 default disable iff (!rst_ni);
 
 // Re-defined wires 
+wire slv_port_r_req_0_val;
+wire slv_port_r_req_0__2_val;
+wire slv_port_r_req_0_rdy;
+wire slv_port_r_req_0__2_rdy;
+wire slv_port_r_req_0_transid;
+wire slv_port_r_req_0__2_transid;
+wire slv_port_r_resp_0_val;
+wire slv_port_r_resp_0__2_val;
+wire slv_port_r_resp_0_rdy;
+wire slv_port_r_resp_0__2_rdy;
+wire slv_port_r_resp_0_transid;
+wire slv_port_r_resp_0__2_transid;
+wire slv_port_r_req_1_val;
+wire slv_port_r_req_1__2_val;
+wire slv_port_r_req_1_rdy;
+wire slv_port_r_req_1__2_rdy;
+wire slv_port_r_req_1_transid;
+wire slv_port_r_req_1__2_transid;
+wire slv_port_r_resp_1_val;
+wire slv_port_r_resp_1__2_val;
+wire slv_port_r_resp_1_rdy;
+wire slv_port_r_resp_1__2_rdy;
+wire slv_port_r_resp_1_transid;
+wire slv_port_r_resp_1__2_transid;
+wire slv_port_w_req_0_val;
+wire slv_port_w_req_0__2_val;
+wire slv_port_w_req_0_rdy;
+wire slv_port_w_req_0__2_rdy;
+wire slv_port_w_req_0_transid;
+wire slv_port_w_req_0__2_transid;
+wire slv_port_w_resp_0_val;
+wire slv_port_w_resp_0__2_val;
+wire slv_port_w_resp_0_rdy;
+wire slv_port_w_resp_0__2_rdy;
+wire slv_port_w_resp_0_transid;
+wire slv_port_w_resp_0__2_transid;
+wire slv_port_w_req_1_val;
+wire slv_port_w_req_1__2_val;
+wire slv_port_w_req_1_rdy;
+wire slv_port_w_req_1__2_rdy;
+wire slv_port_w_req_1_transid;
+wire slv_port_w_req_1__2_transid;
+wire slv_port_w_resp_1_val;
+wire slv_port_w_resp_1__2_val;
+wire slv_port_w_resp_1_rdy;
+wire slv_port_w_resp_1__2_rdy;
+wire slv_port_w_resp_1_transid;
+wire slv_port_w_resp_1__2_transid;
 wire mst_port_r_req_0_val;
 wire mst_port_r_req_0__2_val;
 wire mst_port_r_req_0_rdy;
@@ -122,6 +170,38 @@ wire [1:0] mst_port_w_resp_1_transid;
 wire [1:0] mst_port_w_resp_1__2_transid;
 
 // Symbolics and Handshake signals
+wire slv_port_r_req_0_hsk = slv_port_r_req_0_val && slv_port_r_req_0_rdy;
+wire slv_port_r_resp_0_hsk = slv_port_r_resp_0_val && slv_port_r_resp_0_rdy;
+wire [0:0] symb_slv_port_r_req_0_transid;
+am__symb_slv_port_r_req_0_transid_stable: assume property($stable(symb_slv_port_r_req_0_transid));
+wire slv_port_r_req_0__2_hsk = slv_port_r_req_0__2_val && slv_port_r_req_0__2_rdy;
+wire slv_port_r_resp_0__2_hsk = slv_port_r_resp_0__2_val && slv_port_r_resp_0__2_rdy;
+wire [0:0] symb_slv_port_r_req_0__2_transid;
+am__symb_slv_port_r_req_0__2_transid_stable: assume property($stable(symb_slv_port_r_req_0__2_transid));
+wire slv_port_r_req_1_hsk = slv_port_r_req_1_val && slv_port_r_req_1_rdy;
+wire slv_port_r_resp_1_hsk = slv_port_r_resp_1_val && slv_port_r_resp_1_rdy;
+wire [0:0] symb_slv_port_r_req_1_transid;
+am__symb_slv_port_r_req_1_transid_stable: assume property($stable(symb_slv_port_r_req_1_transid));
+wire slv_port_r_req_1__2_hsk = slv_port_r_req_1__2_val && slv_port_r_req_1__2_rdy;
+wire slv_port_r_resp_1__2_hsk = slv_port_r_resp_1__2_val && slv_port_r_resp_1__2_rdy;
+wire [0:0] symb_slv_port_r_req_1__2_transid;
+am__symb_slv_port_r_req_1__2_transid_stable: assume property($stable(symb_slv_port_r_req_1__2_transid));
+wire slv_port_w_req_0_hsk = slv_port_w_req_0_val && slv_port_w_req_0_rdy;
+wire slv_port_w_resp_0_hsk = slv_port_w_resp_0_val && slv_port_w_resp_0_rdy;
+wire [0:0] symb_slv_port_w_req_0_transid;
+am__symb_slv_port_w_req_0_transid_stable: assume property($stable(symb_slv_port_w_req_0_transid));
+wire slv_port_w_req_0__2_hsk = slv_port_w_req_0__2_val && slv_port_w_req_0__2_rdy;
+wire slv_port_w_resp_0__2_hsk = slv_port_w_resp_0__2_val && slv_port_w_resp_0__2_rdy;
+wire [0:0] symb_slv_port_w_req_0__2_transid;
+am__symb_slv_port_w_req_0__2_transid_stable: assume property($stable(symb_slv_port_w_req_0__2_transid));
+wire slv_port_w_req_1_hsk = slv_port_w_req_1_val && slv_port_w_req_1_rdy;
+wire slv_port_w_resp_1_hsk = slv_port_w_resp_1_val && slv_port_w_resp_1_rdy;
+wire [0:0] symb_slv_port_w_req_1_transid;
+am__symb_slv_port_w_req_1_transid_stable: assume property($stable(symb_slv_port_w_req_1_transid));
+wire slv_port_w_req_1__2_hsk = slv_port_w_req_1__2_val && slv_port_w_req_1__2_rdy;
+wire slv_port_w_resp_1__2_hsk = slv_port_w_resp_1__2_val && slv_port_w_resp_1__2_rdy;
+wire [0:0] symb_slv_port_w_req_1__2_transid;
+am__symb_slv_port_w_req_1__2_transid_stable: assume property($stable(symb_slv_port_w_req_1__2_transid));
 wire mst_port_r_req_0_hsk = mst_port_r_req_0_val && mst_port_r_req_0_rdy;
 wire mst_port_r_resp_0_hsk = mst_port_r_resp_0_val && mst_port_r_resp_0_rdy;
 wire [1:0] symb_mst_port_r_req_0_transid;
@@ -191,6 +271,270 @@ assign transfer_cond = architectural_state_eq && io_equal;
 //==============================================================================
 // Modeling
 //==============================================================================
+
+// Modeling incoming request for slv_port_r_req_0
+if (ASSERT_INPUTS) begin
+	as__slv_port_r_req_0_fairness: assert property (slv_port_r_resp_0_val |-> s_eventually(slv_port_r_resp_0_rdy));
+end else begin
+	am__slv_port_r_req_0_fairness: assume property (slv_port_r_resp_0_val |-> s_eventually(slv_port_r_resp_0_rdy));
+end
+
+// Generate sampling signals and model
+reg [3:0] slv_port_r_req_0_transid_sampled;
+wire slv_port_r_req_0_transid_set = slv_port_r_req_0_hsk && slv_port_r_req_0_transid == symb_slv_port_r_req_0_transid;
+wire slv_port_r_req_0_transid_response = slv_port_r_resp_0_hsk && slv_port_r_resp_0_transid == symb_slv_port_r_req_0_transid;
+
+always_ff @(posedge clk_i) begin
+	if(!rst_ni) begin
+		slv_port_r_req_0_transid_sampled <= '0;
+	end else if (slv_port_r_req_0_transid_set || slv_port_r_req_0_transid_response ) begin
+		slv_port_r_req_0_transid_sampled <= slv_port_r_req_0_transid_sampled + slv_port_r_req_0_transid_set - slv_port_r_req_0_transid_response;
+	end
+end
+co__slv_port_r_req_0_transid_sampled: cover property (|slv_port_r_req_0_transid_sampled);
+if (ASSERT_INPUTS) begin
+	as__slv_port_r_req_0_transid_sample_no_overflow: assert property (slv_port_r_req_0_transid_sampled != '1 || !slv_port_r_req_0_transid_set);
+end else begin
+	am__slv_port_r_req_0_transid_sample_no_overflow: assume property (slv_port_r_req_0_transid_sampled != '1 || !slv_port_r_req_0_transid_set);
+end
+
+
+// Assert that if valid eventually ready or dropped valid
+as__slv_port_r_req_0_transid_hsk_or_drop: assert property (slv_port_r_req_0_val |-> s_eventually(!slv_port_r_req_0_val || slv_port_r_req_0_rdy));
+// Assert that every request has a response and that every reponse has a request
+as__slv_port_r_req_0_transid_eventual_response: assert property (|slv_port_r_req_0_transid_sampled |-> s_eventually(slv_port_r_resp_0_val && (slv_port_r_resp_0_transid == symb_slv_port_r_req_0_transid) ));
+as__slv_port_r_req_0_transid_was_a_request: assert property (slv_port_r_req_0_transid_response |-> slv_port_r_req_0_transid_set || slv_port_r_req_0_transid_sampled);
+
+// Modeling incoming request for slv_port_r_req_0__2
+if (ASSERT_INPUTS) begin
+	as__slv_port_r_req_0__2_fairness: assert property (slv_port_r_resp_0__2_val |-> s_eventually(slv_port_r_resp_0__2_rdy));
+end else begin
+	am__slv_port_r_req_0__2_fairness: assume property (slv_port_r_resp_0__2_val |-> s_eventually(slv_port_r_resp_0__2_rdy));
+end
+
+// Generate sampling signals and model
+reg [3:0] slv_port_r_req_0__2_transid_sampled;
+wire slv_port_r_req_0__2_transid_set = slv_port_r_req_0__2_hsk && slv_port_r_req_0__2_transid == symb_slv_port_r_req_0__2_transid;
+wire slv_port_r_req_0__2_transid_response = slv_port_r_resp_0__2_hsk && slv_port_r_resp_0__2_transid == symb_slv_port_r_req_0__2_transid;
+
+always_ff @(posedge clk_i) begin
+	if(!rst_ni) begin
+		slv_port_r_req_0__2_transid_sampled <= '0;
+	end else if (slv_port_r_req_0__2_transid_set || slv_port_r_req_0__2_transid_response ) begin
+		slv_port_r_req_0__2_transid_sampled <= slv_port_r_req_0__2_transid_sampled + slv_port_r_req_0__2_transid_set - slv_port_r_req_0__2_transid_response;
+	end
+end
+co__slv_port_r_req_0__2_transid_sampled: cover property (|slv_port_r_req_0__2_transid_sampled);
+if (ASSERT_INPUTS) begin
+	as__slv_port_r_req_0__2_transid_sample_no_overflow: assert property (slv_port_r_req_0__2_transid_sampled != '1 || !slv_port_r_req_0__2_transid_set);
+end else begin
+	am__slv_port_r_req_0__2_transid_sample_no_overflow: assume property (slv_port_r_req_0__2_transid_sampled != '1 || !slv_port_r_req_0__2_transid_set);
+end
+
+
+// Assert that if valid eventually ready or dropped valid
+as__slv_port_r_req_0__2_transid_hsk_or_drop: assert property (slv_port_r_req_0__2_val |-> s_eventually(!slv_port_r_req_0__2_val || slv_port_r_req_0__2_rdy));
+// Assert that every request has a response and that every reponse has a request
+as__slv_port_r_req_0__2_transid_eventual_response: assert property (|slv_port_r_req_0__2_transid_sampled |-> s_eventually(slv_port_r_resp_0__2_val && (slv_port_r_resp_0__2_transid == symb_slv_port_r_req_0__2_transid) ));
+as__slv_port_r_req_0__2_transid_was_a_request: assert property (slv_port_r_req_0__2_transid_response |-> slv_port_r_req_0__2_transid_set || slv_port_r_req_0__2_transid_sampled);
+
+// Modeling incoming request for slv_port_r_req_1
+if (ASSERT_INPUTS) begin
+	as__slv_port_r_req_1_fairness: assert property (slv_port_r_resp_1_val |-> s_eventually(slv_port_r_resp_1_rdy));
+end else begin
+	am__slv_port_r_req_1_fairness: assume property (slv_port_r_resp_1_val |-> s_eventually(slv_port_r_resp_1_rdy));
+end
+
+// Generate sampling signals and model
+reg [3:0] slv_port_r_req_1_transid_sampled;
+wire slv_port_r_req_1_transid_set = slv_port_r_req_1_hsk && slv_port_r_req_1_transid == symb_slv_port_r_req_1_transid;
+wire slv_port_r_req_1_transid_response = slv_port_r_resp_1_hsk && slv_port_r_resp_1_transid == symb_slv_port_r_req_1_transid;
+
+always_ff @(posedge clk_i) begin
+	if(!rst_ni) begin
+		slv_port_r_req_1_transid_sampled <= '0;
+	end else if (slv_port_r_req_1_transid_set || slv_port_r_req_1_transid_response ) begin
+		slv_port_r_req_1_transid_sampled <= slv_port_r_req_1_transid_sampled + slv_port_r_req_1_transid_set - slv_port_r_req_1_transid_response;
+	end
+end
+co__slv_port_r_req_1_transid_sampled: cover property (|slv_port_r_req_1_transid_sampled);
+if (ASSERT_INPUTS) begin
+	as__slv_port_r_req_1_transid_sample_no_overflow: assert property (slv_port_r_req_1_transid_sampled != '1 || !slv_port_r_req_1_transid_set);
+end else begin
+	am__slv_port_r_req_1_transid_sample_no_overflow: assume property (slv_port_r_req_1_transid_sampled != '1 || !slv_port_r_req_1_transid_set);
+end
+
+
+// Assert that if valid eventually ready or dropped valid
+as__slv_port_r_req_1_transid_hsk_or_drop: assert property (slv_port_r_req_1_val |-> s_eventually(!slv_port_r_req_1_val || slv_port_r_req_1_rdy));
+// Assert that every request has a response and that every reponse has a request
+as__slv_port_r_req_1_transid_eventual_response: assert property (|slv_port_r_req_1_transid_sampled |-> s_eventually(slv_port_r_resp_1_val && (slv_port_r_resp_1_transid == symb_slv_port_r_req_1_transid) ));
+as__slv_port_r_req_1_transid_was_a_request: assert property (slv_port_r_req_1_transid_response |-> slv_port_r_req_1_transid_set || slv_port_r_req_1_transid_sampled);
+
+// Modeling incoming request for slv_port_r_req_1__2
+if (ASSERT_INPUTS) begin
+	as__slv_port_r_req_1__2_fairness: assert property (slv_port_r_resp_1__2_val |-> s_eventually(slv_port_r_resp_1__2_rdy));
+end else begin
+	am__slv_port_r_req_1__2_fairness: assume property (slv_port_r_resp_1__2_val |-> s_eventually(slv_port_r_resp_1__2_rdy));
+end
+
+// Generate sampling signals and model
+reg [3:0] slv_port_r_req_1__2_transid_sampled;
+wire slv_port_r_req_1__2_transid_set = slv_port_r_req_1__2_hsk && slv_port_r_req_1__2_transid == symb_slv_port_r_req_1__2_transid;
+wire slv_port_r_req_1__2_transid_response = slv_port_r_resp_1__2_hsk && slv_port_r_resp_1__2_transid == symb_slv_port_r_req_1__2_transid;
+
+always_ff @(posedge clk_i) begin
+	if(!rst_ni) begin
+		slv_port_r_req_1__2_transid_sampled <= '0;
+	end else if (slv_port_r_req_1__2_transid_set || slv_port_r_req_1__2_transid_response ) begin
+		slv_port_r_req_1__2_transid_sampled <= slv_port_r_req_1__2_transid_sampled + slv_port_r_req_1__2_transid_set - slv_port_r_req_1__2_transid_response;
+	end
+end
+co__slv_port_r_req_1__2_transid_sampled: cover property (|slv_port_r_req_1__2_transid_sampled);
+if (ASSERT_INPUTS) begin
+	as__slv_port_r_req_1__2_transid_sample_no_overflow: assert property (slv_port_r_req_1__2_transid_sampled != '1 || !slv_port_r_req_1__2_transid_set);
+end else begin
+	am__slv_port_r_req_1__2_transid_sample_no_overflow: assume property (slv_port_r_req_1__2_transid_sampled != '1 || !slv_port_r_req_1__2_transid_set);
+end
+
+
+// Assert that if valid eventually ready or dropped valid
+as__slv_port_r_req_1__2_transid_hsk_or_drop: assert property (slv_port_r_req_1__2_val |-> s_eventually(!slv_port_r_req_1__2_val || slv_port_r_req_1__2_rdy));
+// Assert that every request has a response and that every reponse has a request
+as__slv_port_r_req_1__2_transid_eventual_response: assert property (|slv_port_r_req_1__2_transid_sampled |-> s_eventually(slv_port_r_resp_1__2_val && (slv_port_r_resp_1__2_transid == symb_slv_port_r_req_1__2_transid) ));
+as__slv_port_r_req_1__2_transid_was_a_request: assert property (slv_port_r_req_1__2_transid_response |-> slv_port_r_req_1__2_transid_set || slv_port_r_req_1__2_transid_sampled);
+
+// Modeling incoming request for slv_port_w_req_0
+if (ASSERT_INPUTS) begin
+	as__slv_port_w_req_0_fairness: assert property (slv_port_w_resp_0_val |-> s_eventually(slv_port_w_resp_0_rdy));
+end else begin
+	am__slv_port_w_req_0_fairness: assume property (slv_port_w_resp_0_val |-> s_eventually(slv_port_w_resp_0_rdy));
+end
+
+// Generate sampling signals and model
+reg [3:0] slv_port_w_req_0_transid_sampled;
+wire slv_port_w_req_0_transid_set = slv_port_w_req_0_hsk && slv_port_w_req_0_transid == symb_slv_port_w_req_0_transid;
+wire slv_port_w_req_0_transid_response = slv_port_w_resp_0_hsk && slv_port_w_resp_0_transid == symb_slv_port_w_req_0_transid;
+
+always_ff @(posedge clk_i) begin
+	if(!rst_ni) begin
+		slv_port_w_req_0_transid_sampled <= '0;
+	end else if (slv_port_w_req_0_transid_set || slv_port_w_req_0_transid_response ) begin
+		slv_port_w_req_0_transid_sampled <= slv_port_w_req_0_transid_sampled + slv_port_w_req_0_transid_set - slv_port_w_req_0_transid_response;
+	end
+end
+co__slv_port_w_req_0_transid_sampled: cover property (|slv_port_w_req_0_transid_sampled);
+if (ASSERT_INPUTS) begin
+	as__slv_port_w_req_0_transid_sample_no_overflow: assert property (slv_port_w_req_0_transid_sampled != '1 || !slv_port_w_req_0_transid_set);
+end else begin
+	am__slv_port_w_req_0_transid_sample_no_overflow: assume property (slv_port_w_req_0_transid_sampled != '1 || !slv_port_w_req_0_transid_set);
+end
+
+
+// Assert that if valid eventually ready or dropped valid
+as__slv_port_w_req_0_transid_hsk_or_drop: assert property (slv_port_w_req_0_val |-> s_eventually(!slv_port_w_req_0_val || slv_port_w_req_0_rdy));
+// Assert that every request has a response and that every reponse has a request
+as__slv_port_w_req_0_transid_eventual_response: assert property (|slv_port_w_req_0_transid_sampled |-> s_eventually(slv_port_w_resp_0_val && (slv_port_w_resp_0_transid == symb_slv_port_w_req_0_transid) ));
+as__slv_port_w_req_0_transid_was_a_request: assert property (slv_port_w_req_0_transid_response |-> slv_port_w_req_0_transid_set || slv_port_w_req_0_transid_sampled);
+
+// Modeling incoming request for slv_port_w_req_0__2
+if (ASSERT_INPUTS) begin
+	as__slv_port_w_req_0__2_fairness: assert property (slv_port_w_resp_0__2_val |-> s_eventually(slv_port_w_resp_0__2_rdy));
+end else begin
+	am__slv_port_w_req_0__2_fairness: assume property (slv_port_w_resp_0__2_val |-> s_eventually(slv_port_w_resp_0__2_rdy));
+end
+
+// Generate sampling signals and model
+reg [3:0] slv_port_w_req_0__2_transid_sampled;
+wire slv_port_w_req_0__2_transid_set = slv_port_w_req_0__2_hsk && slv_port_w_req_0__2_transid == symb_slv_port_w_req_0__2_transid;
+wire slv_port_w_req_0__2_transid_response = slv_port_w_resp_0__2_hsk && slv_port_w_resp_0__2_transid == symb_slv_port_w_req_0__2_transid;
+
+always_ff @(posedge clk_i) begin
+	if(!rst_ni) begin
+		slv_port_w_req_0__2_transid_sampled <= '0;
+	end else if (slv_port_w_req_0__2_transid_set || slv_port_w_req_0__2_transid_response ) begin
+		slv_port_w_req_0__2_transid_sampled <= slv_port_w_req_0__2_transid_sampled + slv_port_w_req_0__2_transid_set - slv_port_w_req_0__2_transid_response;
+	end
+end
+co__slv_port_w_req_0__2_transid_sampled: cover property (|slv_port_w_req_0__2_transid_sampled);
+if (ASSERT_INPUTS) begin
+	as__slv_port_w_req_0__2_transid_sample_no_overflow: assert property (slv_port_w_req_0__2_transid_sampled != '1 || !slv_port_w_req_0__2_transid_set);
+end else begin
+	am__slv_port_w_req_0__2_transid_sample_no_overflow: assume property (slv_port_w_req_0__2_transid_sampled != '1 || !slv_port_w_req_0__2_transid_set);
+end
+
+
+// Assert that if valid eventually ready or dropped valid
+as__slv_port_w_req_0__2_transid_hsk_or_drop: assert property (slv_port_w_req_0__2_val |-> s_eventually(!slv_port_w_req_0__2_val || slv_port_w_req_0__2_rdy));
+// Assert that every request has a response and that every reponse has a request
+as__slv_port_w_req_0__2_transid_eventual_response: assert property (|slv_port_w_req_0__2_transid_sampled |-> s_eventually(slv_port_w_resp_0__2_val && (slv_port_w_resp_0__2_transid == symb_slv_port_w_req_0__2_transid) ));
+as__slv_port_w_req_0__2_transid_was_a_request: assert property (slv_port_w_req_0__2_transid_response |-> slv_port_w_req_0__2_transid_set || slv_port_w_req_0__2_transid_sampled);
+
+// Modeling incoming request for slv_port_w_req_1
+if (ASSERT_INPUTS) begin
+	as__slv_port_w_req_1_fairness: assert property (slv_port_w_resp_1_val |-> s_eventually(slv_port_w_resp_1_rdy));
+end else begin
+	am__slv_port_w_req_1_fairness: assume property (slv_port_w_resp_1_val |-> s_eventually(slv_port_w_resp_1_rdy));
+end
+
+// Generate sampling signals and model
+reg [3:0] slv_port_w_req_1_transid_sampled;
+wire slv_port_w_req_1_transid_set = slv_port_w_req_1_hsk && slv_port_w_req_1_transid == symb_slv_port_w_req_1_transid;
+wire slv_port_w_req_1_transid_response = slv_port_w_resp_1_hsk && slv_port_w_resp_1_transid == symb_slv_port_w_req_1_transid;
+
+always_ff @(posedge clk_i) begin
+	if(!rst_ni) begin
+		slv_port_w_req_1_transid_sampled <= '0;
+	end else if (slv_port_w_req_1_transid_set || slv_port_w_req_1_transid_response ) begin
+		slv_port_w_req_1_transid_sampled <= slv_port_w_req_1_transid_sampled + slv_port_w_req_1_transid_set - slv_port_w_req_1_transid_response;
+	end
+end
+co__slv_port_w_req_1_transid_sampled: cover property (|slv_port_w_req_1_transid_sampled);
+if (ASSERT_INPUTS) begin
+	as__slv_port_w_req_1_transid_sample_no_overflow: assert property (slv_port_w_req_1_transid_sampled != '1 || !slv_port_w_req_1_transid_set);
+end else begin
+	am__slv_port_w_req_1_transid_sample_no_overflow: assume property (slv_port_w_req_1_transid_sampled != '1 || !slv_port_w_req_1_transid_set);
+end
+
+
+// Assert that if valid eventually ready or dropped valid
+as__slv_port_w_req_1_transid_hsk_or_drop: assert property (slv_port_w_req_1_val |-> s_eventually(!slv_port_w_req_1_val || slv_port_w_req_1_rdy));
+// Assert that every request has a response and that every reponse has a request
+as__slv_port_w_req_1_transid_eventual_response: assert property (|slv_port_w_req_1_transid_sampled |-> s_eventually(slv_port_w_resp_1_val && (slv_port_w_resp_1_transid == symb_slv_port_w_req_1_transid) ));
+as__slv_port_w_req_1_transid_was_a_request: assert property (slv_port_w_req_1_transid_response |-> slv_port_w_req_1_transid_set || slv_port_w_req_1_transid_sampled);
+
+// Modeling incoming request for slv_port_w_req_1__2
+if (ASSERT_INPUTS) begin
+	as__slv_port_w_req_1__2_fairness: assert property (slv_port_w_resp_1__2_val |-> s_eventually(slv_port_w_resp_1__2_rdy));
+end else begin
+	am__slv_port_w_req_1__2_fairness: assume property (slv_port_w_resp_1__2_val |-> s_eventually(slv_port_w_resp_1__2_rdy));
+end
+
+// Generate sampling signals and model
+reg [3:0] slv_port_w_req_1__2_transid_sampled;
+wire slv_port_w_req_1__2_transid_set = slv_port_w_req_1__2_hsk && slv_port_w_req_1__2_transid == symb_slv_port_w_req_1__2_transid;
+wire slv_port_w_req_1__2_transid_response = slv_port_w_resp_1__2_hsk && slv_port_w_resp_1__2_transid == symb_slv_port_w_req_1__2_transid;
+
+always_ff @(posedge clk_i) begin
+	if(!rst_ni) begin
+		slv_port_w_req_1__2_transid_sampled <= '0;
+	end else if (slv_port_w_req_1__2_transid_set || slv_port_w_req_1__2_transid_response ) begin
+		slv_port_w_req_1__2_transid_sampled <= slv_port_w_req_1__2_transid_sampled + slv_port_w_req_1__2_transid_set - slv_port_w_req_1__2_transid_response;
+	end
+end
+co__slv_port_w_req_1__2_transid_sampled: cover property (|slv_port_w_req_1__2_transid_sampled);
+if (ASSERT_INPUTS) begin
+	as__slv_port_w_req_1__2_transid_sample_no_overflow: assert property (slv_port_w_req_1__2_transid_sampled != '1 || !slv_port_w_req_1__2_transid_set);
+end else begin
+	am__slv_port_w_req_1__2_transid_sample_no_overflow: assume property (slv_port_w_req_1__2_transid_sampled != '1 || !slv_port_w_req_1__2_transid_set);
+end
+
+
+// Assert that if valid eventually ready or dropped valid
+as__slv_port_w_req_1__2_transid_hsk_or_drop: assert property (slv_port_w_req_1__2_val |-> s_eventually(!slv_port_w_req_1__2_val || slv_port_w_req_1__2_rdy));
+// Assert that every request has a response and that every reponse has a request
+as__slv_port_w_req_1__2_transid_eventual_response: assert property (|slv_port_w_req_1__2_transid_sampled |-> s_eventually(slv_port_w_resp_1__2_val && (slv_port_w_resp_1__2_transid == symb_slv_port_w_req_1__2_transid) ));
+as__slv_port_w_req_1__2_transid_was_a_request: assert property (slv_port_w_req_1__2_transid_response |-> slv_port_w_req_1__2_transid_set || slv_port_w_req_1__2_transid_sampled);
 
 // Modeling outstanding request for mst_port_r_req_0
 reg [2**(1+1)-1:0] mst_port_r_req_0_outstanding_req_r;
@@ -440,6 +784,54 @@ end else begin : mst_port_w_req_1__2_else_gen
 end
 endgenerate
 
+assign slv_port_r_req_0_val = slv_ports_req_i[0].ar_valid;
+assign slv_port_r_req_0__2_val = slv_ports_req_i_2[0].ar_valid;
+assign slv_port_r_req_0_rdy = slv_ports_resp_o[0].ar_ready;
+assign slv_port_r_req_0__2_rdy = slv_ports_resp_o_2[0].ar_ready;
+assign slv_port_r_req_0_transid = slv_ports_req_i[0].ar.id;
+assign slv_port_r_req_0__2_transid = slv_ports_req_i_2[0].ar.id;
+assign slv_port_r_resp_0_val = slv_ports_resp_o[0].r_valid;
+assign slv_port_r_resp_0__2_val = slv_ports_resp_o_2[0].r_valid;
+assign slv_port_r_resp_0_rdy = slv_ports_req_i[0].r_ready;
+assign slv_port_r_resp_0__2_rdy = slv_ports_req_i_2[0].r_ready;
+assign slv_port_r_resp_0_transid = slv_ports_resp_o[0].r.id;
+assign slv_port_r_resp_0__2_transid = slv_ports_resp_o_2[0].r.id;
+assign slv_port_r_req_1_val = slv_ports_req_i[1].ar_valid;
+assign slv_port_r_req_1__2_val = slv_ports_req_i_2[1].ar_valid;
+assign slv_port_r_req_1_rdy = slv_ports_resp_o[1].ar_ready;
+assign slv_port_r_req_1__2_rdy = slv_ports_resp_o_2[1].ar_ready;
+assign slv_port_r_req_1_transid = slv_ports_req_i[1].ar.id;
+assign slv_port_r_req_1__2_transid = slv_ports_req_i_2[1].ar.id;
+assign slv_port_r_resp_1_val = slv_ports_resp_o[1].r_valid;
+assign slv_port_r_resp_1__2_val = slv_ports_resp_o_2[1].r_valid;
+assign slv_port_r_resp_1_rdy = slv_ports_req_i[1].r_ready;
+assign slv_port_r_resp_1__2_rdy = slv_ports_req_i_2[1].r_ready;
+assign slv_port_r_resp_1_transid = slv_ports_resp_o[1].r.id;
+assign slv_port_r_resp_1__2_transid = slv_ports_resp_o_2[1].r.id;
+assign slv_port_w_req_0_val = slv_ports_req_i[0].aw_valid;
+assign slv_port_w_req_0__2_val = slv_ports_req_i_2[0].aw_valid;
+assign slv_port_w_req_0_rdy = slv_ports_resp_o[0].aw_ready;
+assign slv_port_w_req_0__2_rdy = slv_ports_resp_o_2[0].aw_ready;
+assign slv_port_w_req_0_transid = slv_ports_req_i[0].aw.id;
+assign slv_port_w_req_0__2_transid = slv_ports_req_i_2[0].aw.id;
+assign slv_port_w_resp_0_val = slv_ports_resp_o[0].b_valid;
+assign slv_port_w_resp_0__2_val = slv_ports_resp_o_2[0].b_valid;
+assign slv_port_w_resp_0_rdy = slv_ports_req_i[0].b_ready;
+assign slv_port_w_resp_0__2_rdy = slv_ports_req_i_2[0].b_ready;
+assign slv_port_w_resp_0_transid = slv_ports_resp_o[0].b.id;
+assign slv_port_w_resp_0__2_transid = slv_ports_resp_o_2[0].b.id;
+assign slv_port_w_req_1_val = slv_ports_req_i[1].aw_valid;
+assign slv_port_w_req_1__2_val = slv_ports_req_i_2[1].aw_valid;
+assign slv_port_w_req_1_rdy = slv_ports_resp_o[1].aw_ready;
+assign slv_port_w_req_1__2_rdy = slv_ports_resp_o_2[1].aw_ready;
+assign slv_port_w_req_1_transid = slv_ports_req_i[1].aw.id;
+assign slv_port_w_req_1__2_transid = slv_ports_req_i_2[1].aw.id;
+assign slv_port_w_resp_1_val = slv_ports_resp_o[1].b_valid;
+assign slv_port_w_resp_1__2_val = slv_ports_resp_o_2[1].b_valid;
+assign slv_port_w_resp_1_rdy = slv_ports_req_i[1].b_ready;
+assign slv_port_w_resp_1__2_rdy = slv_ports_req_i_2[1].b_ready;
+assign slv_port_w_resp_1_transid = slv_ports_resp_o[1].b.id;
+assign slv_port_w_resp_1__2_transid = slv_ports_resp_o_2[1].b.id;
 assign mst_port_r_req_0_val = mst_ports_req_o[0].ar_valid;
 assign mst_port_r_req_0__2_val = mst_ports_req_o_2[0].ar_valid;
 assign mst_port_r_req_0_rdy = mst_ports_resp_i[0].ar_ready;
