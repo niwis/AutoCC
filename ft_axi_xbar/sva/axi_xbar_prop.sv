@@ -619,6 +619,12 @@ assign mst_port_w_resp_1__2_transid = mst_ports_resp_o_2[1].b.id;
     slv_no_aw_err_2: assume property (u_axi_xbar2.i_xbar_unmuxed.gen_slv_port_demux[i].dec_aw_error == 1'b0);
   end
 
+  // ASSUME 8: No open Ws
+  for (genvar i = 0; i < Cfg.NoSlvPorts; i++) begin : slv_no_open_w
+    slv_no_open_w_1: assume property (u_axi_xbar.i_xbar_unmuxed.gen_slv_port_demux[i].i_axi_demux.i_demux_simple.genblk1.w_open == '0);
+    slv_no_open_w_2: assume property (u_axi_xbar2.i_xbar_unmuxed.gen_slv_port_demux[i].i_axi_demux.i_demux_simple.genblk1.w_open == '0);
+  end
+
   assign architectural_state_eq = !|r_cnt_q && !|w_cnt_q && !|inf_q && !any_valid;
 
 endmodule
