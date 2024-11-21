@@ -583,6 +583,42 @@ assign mst_port_w_resp_1__2_transid = mst_ports_resp_o_2[1].b.id;
     end
   end
 
+  // ASSUME 6: AXI handshake stability rules
+  for (genvar i = 0; i < Cfg.NoSlvPorts; i++) begin : slv_stable
+    slv_ar_stable: assume property ((slv_ports_req_i[i].ar_valid && !slv_ports_resp_o[i].ar_ready) |=> (slv_ports_req_i[i].ar_valid && $stable(slv_ports_req_i[i].ar)));
+    slv_ar_stable_2: assume property ((slv_ports_req_i_2[i].ar_valid && !slv_ports_resp_o_2[i].ar_ready) |=> (slv_ports_req_i_2[i].ar_valid && $stable(slv_ports_req_i_2[i].ar)));
+    slv_aw_stable: assume property ((slv_ports_req_i[i].aw_valid && !slv_ports_resp_o[i].aw_ready) |=> (slv_ports_req_i[i].aw_valid && $stable(slv_ports_req_i[i].aw)));
+    slv_aw_stable_2: assume property ((slv_ports_req_i_2[i].aw_valid && !slv_ports_resp_o_2[i].aw_ready) |=> (slv_ports_req_i_2[i].aw_valid && $stable(slv_ports_req_i_2[i].aw)));
+    slv_w_stable: assume property ((slv_ports_req_i[i].w_valid && !slv_ports_resp_o[i].w_ready) |=> (slv_ports_req_i[i].w_valid && $stable(slv_ports_req_i[i].w)));
+    slv_w_stable_2: assume property ((slv_ports_req_i_2[i].w_valid && !slv_ports_resp_o_2[i].w_ready) |=> (slv_ports_req_i_2[i].w_valid && $stable(slv_ports_req_i_2[i].w)));
+    // Some correctness checks won't hurt...
+    slv_r_stable: assert property ((slv_ports_resp_o[i].r_valid && !slv_ports_req_i[i].r_ready) |=> (slv_ports_resp_o[i].r_valid && $stable(slv_ports_resp_o[i].r)));
+    slv_r_stable_2: assert property ((slv_ports_resp_o_2[i].r_valid && !slv_ports_req_i_2[i].r_ready) |=> (slv_ports_resp_o_2[i].r_valid && $stable(slv_ports_resp_o_2[i].r)));
+    slv_b_stable: assert property ((slv_ports_resp_o[i].b_valid && !slv_ports_req_i[i].b_ready) |=> (slv_ports_resp_o[i].b_valid && $stable(slv_ports_resp_o[i].b)));
+    slv_b_stable_2: assert property ((slv_ports_resp_o_2[i].b_valid && !slv_ports_req_i_2[i].b_ready) |=> (slv_ports_resp_o_2[i].b_valid && $stable(slv_ports_resp_o_2[i].b)));
+  end
+  for (genvar i = 0; i < Cfg.NoMstPorts; i++) begin : mst_stable
+    mst_r_stable: assume property ((mst_ports_resp_i[i].r_valid && !mst_ports_req_o[i].r_ready) |=> (mst_ports_resp_i[i].r_valid && $stable(mst_ports_resp_i[i].r)));
+    mst_r_stable_2: assume property ((mst_ports_resp_i_2[i].r_valid && !mst_ports_req_o_2[i].r_ready) |=> (mst_ports_resp_i_2[i].r_valid && $stable(mst_ports_resp_i_2[i].r)));
+    mst_b_stable: assume property ((mst_ports_resp_i[i].b_valid && !mst_ports_req_o[i].b_ready) |=> (mst_ports_resp_i[i].b_valid && $stable(mst_ports_resp_i[i].b)));
+    mst_b_stable_2: assume property ((mst_ports_resp_i_2[i].b_valid && !mst_ports_req_o_2[i].b_ready) |=> (mst_ports_resp_i_2[i].b_valid && $stable(mst_ports_resp_i_2[i].b)));
+    // Some correctness checks won't hurt...
+    mst_ar_stable: assert property ((mst_ports_req_o[i].ar_valid && !mst_ports_resp_i[i].ar_ready) |=> (mst_ports_req_o[i].ar_valid && $stable(mst_ports_req_o[i].ar)));
+    mst_ar_stable_2: assert property ((mst_ports_req_o_2[i].ar_valid && !mst_ports_resp_i_2[i].ar_ready) |=> (mst_ports_req_o_2[i].ar_valid && $stable(mst_ports_req_o_2[i].ar)));
+    mst_aw_stable: assert property ((mst_ports_req_o[i].aw_valid && !mst_ports_resp_i[i].aw_ready) |=> (mst_ports_req_o[i].aw_valid && $stable(mst_ports_req_o[i].aw)));
+    mst_aw_stable_2: assert property ((mst_ports_req_o_2[i].aw_valid && !mst_ports_resp_i_2[i].aw_ready) |=> (mst_ports_req_o_2[i].aw_valid && $stable(mst_ports_req_o_2[i].aw)));
+    mst_w_stable: assert property ((mst_ports_req_o[i].w_valid && !mst_ports_resp_i[i].w_ready) |=> (mst_ports_req_o[i].w_valid && $stable(mst_ports_req_o[i].w)));
+    mst_w_stable_2: assert property ((mst_ports_req_o_2[i].w_valid && !mst_ports_resp_i_2[i].w_ready) |=> (mst_ports_req_o_2[i].w_valid && $stable(mst_ports_req_o_2[i].w)));
+  end
+
+  // ASSUME 7: No decode errors
+  for (genvar i = 0; i < Cfg.NoSlvPorts; i++) begin : slv_no_err
+    slv_no_ar_err_1: assume property (u_axi_xbar.i_xbar_unmuxed.gen_slv_port_demux[i].dec_ar_error == 1'b0);
+    slv_no_ar_err_2: assume property (u_axi_xbar2.i_xbar_unmuxed.gen_slv_port_demux[i].dec_ar_error == 1'b0);
+    slv_no_aw_err_1: assume property (u_axi_xbar.i_xbar_unmuxed.gen_slv_port_demux[i].dec_aw_error == 1'b0);
+    slv_no_aw_err_2: assume property (u_axi_xbar2.i_xbar_unmuxed.gen_slv_port_demux[i].dec_aw_error == 1'b0);
+  end
+
   assign architectural_state_eq = !|r_cnt_q && !|w_cnt_q && !|inf_q && !any_valid;
 
 endmodule
