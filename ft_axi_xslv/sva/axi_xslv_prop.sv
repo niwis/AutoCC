@@ -570,6 +570,12 @@ assign slv_port_w_resp_1__2_transid = slv_ports_resp_o_2[1].b.id;
     slv_no_aw_err_2: assume property (u_axi_xslv2.i_axi_xbar.i_xbar_unmuxed.gen_slv_port_demux[i].dec_aw_error == 1'b0);
   end
 
+  // ASSUME 8: No atomics (for now). They trigger two responses (R and B), which might actually be interesting
+  for (genvar i = 0; i < Cfg.NoSlvPorts; i++) begin : slv_no_atop
+    slv_no_atop_1: assume property (slv_ports_req_i[i].aw.atop == '0);
+    slv_no_atop_2: assume property (slv_ports_req_i_2[i].aw.atop == '0);
+  end
+
   assign architectural_state_eq = !|r_cnt_q && !|w_cnt_q && !any_valid;
 
 endmodule
