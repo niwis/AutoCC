@@ -17,6 +17,5 @@ bind axi_xslv_wrap axi_xslv_prop
 		.mst_req_t (autocc_axi_xbar_pkg::mst_req_t),
 		.mst_resp_t (autocc_axi_xbar_pkg::mst_resp_t),
 		.rule_t (autocc_axi_xbar_pkg::rule_t),
-		.rule_t (rule_t),
 		.ASSERT_INPUTS (0)
 	) u_axi_xslv_sva(.*);
